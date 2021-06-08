@@ -40,12 +40,12 @@ listener.
 3.  The EmoteData database component is located on the UI and therefore will be
     shared with any players with the same UI prefab.
 
-1.  Save the prefab.
+4.  Save the prefab.
 
-2.  Edit the Demo animation data or create a new Emote Data Scriptable object
+5.  Edit the Demo animation data or create a new Emote Data Scriptable object
     for your Emote Animation Data:
 
-3.  Right click in a folder and select: Create -\> RatherGoodGames -\> EmoteData
+6.  Right click in a folder and select: Create -\> RatherGoodGames -\> EmoteData
     and set up your animations actions as desired.
 
 ![](media/b3bce1add4061cc07eb3292f94f73067.png)
@@ -56,7 +56,7 @@ listener.
 the emote.
 
 **KeyName**: Assign a key name to enable using this animation to be activated by
-key press. The name must EXACTLY matchthe name used in your GameInstance
+key press. The name must EXACTLY match the name used in your GameInstance
 InputSettingsManager component in your Init scene. (See example below).
 
 ![Graphical user interface Description automatically
@@ -91,7 +91,5 @@ His chat reads: “[You are playing dead]”.
 From the above example other players will see: [Player1 is dead…or is he?]
 
 **Done.**
-
-Hit play and press the button you selected to show the cursor.
 
 [![](https://i9.ytimg.com/vi/9hTeKR2RBAM/mq2.jpg?sqp=CNi1-4UG&rs=AOn4CLDXgm31Cdkr94r5qOnk8hP-U-ToDg)](https://youtu.be/9hTeKR2RBAM)
