@@ -1,67 +1,97 @@
 # EmoteChat
 
-**Author:** RLC
+**Author:** RatherGood1
 
-**Compatibility: (tested on) MMORPG Kit Version 1.65f**
+**Compatibility: (tested on) Suriyun** **MMORPG Kit Version 1.65f**
 
 **Description:** Provides slash commands or hotkey activation to perform emote
 animations.
 
 **Other Dependencies:**
 
-You need to provide your own animations.
+You need to provide your own animations. Demo uses simple kit animations.
 
 **Core MMORPG Kit modifications:**
 
-Requires edits to UIChatHandler class.
+None. Requires edits to UIGamePlay components.
+
+**Description:**
+
+By slash command “/dance” or key press will send emote command to all players in
+scene. Animation plays for sender. Messages are generated depending on the
+listener.
 
 **Instructions for use:**
 
-1.  [Core Edit] In the “UIChatHandler” change:
+1.  On your CanvasGameplay prefab replace the UIChat_Standalone with the
+    UIChatMessageRGEmoteMod” prefab
 
-    1.  From: public void SendChatMessage()
+    1.  The ew Prefab is provided In the
+        Assets/RatherGood/MMOKit/EmoteChat/Prefabs folder
 
-    2.  TO: public virtual void SendChatMessage()
-
-2.  On your CanvaGameplay prefab
-
-    1.  Hint: you can locate this on your GameInstance component in you init
+    2.  Hint: you can locate this on your GameInstance component in your init
         scene under “UI Scene Gameplay”
 
-3.  Recommended: Copy the prefab to another folder outside the kit before
+        ![](media/fcfee0744d595cd2c025e53dac7237b0.png)
+
+2.  Recommended: Copy the prefab to another folder outside the kit before
     editing.
 
-    ![Graphical user interface, website Description automatically
-    generated](media/40e9c517d77f5269fe94a481171d75a5.png)
-
-4.  On the UIChat_Standalone component add the “UIChatHandler_RGEmote”
-
-5.  Copy the component links form your current UIChatHandler to
-    UIChatHandler_RGEmote and then delete the UIChatHandler.
-
-![A screenshot of a computer Description automatically generated with medium
-confidence](media/243ad7201167a09e5954c51df9ec84f5.png)
+3.  The EmoteData database component is located on the UI and therefore will be
+    shared with any players with the same UI prefab.
 
 1.  Save the prefab.
 
-2.  Create a new Emote Data Scriptable object for your Emote Animation Data:
+2.  Edit the Demo animation data or create a new Emote Data Scriptable object
+    for your Emote Animation Data:
 
 3.  Right click in a folder and select: Create -\> RatherGoodGames -\> EmoteData
     and set up your animations actions as desired.
 
-    1.  Alternatively you can copy the example provided and modify as needed.
+![](media/b3bce1add4061cc07eb3292f94f73067.png)
 
-4.  Add this to the EmoteData field of
+**EmoteData Fields:**
 
-5.  ![A screenshot of a computer Description automatically generated with medium
-    confidence](media/321646e54302fb9eaaf961498e438c73.png)
+**slashCmdText**: This is the text the user types in the chat window to activate
+the emote.
 
-    ![](media/9d82f6583bd7377d6343e04e31157bc9.png)
+**KeyName**: Assign a key name to enable using this animation to be activated by
+key press. The name must EXACTLY matchthe name used in your GameInstance
+InputSettingsManager component in your Init scene. (See example below).
 
-![](media/001153dd92eb5c0505d413de1a300129.png)
+![Graphical user interface Description automatically
+generated](media/b2c8fe66a89a3ad081df1f9ef1107205.png)
+
+**ActionAnimation**: Insert the appropriate animation. (Not all animation types
+work with ActionAnimations)
+
+**PlayClipAllLayers**: (Usually should be true) All layers will play animation
+on the full body. If false will only play on upper body.
+
+**AnimSpeedRate**: (0 will be ignoerd) Animation speed can be adjusted. 1(or 0)
+is normal speed. 0.1 will be 1/10th speed.
+
+**TriggerDurationRate**: N/A No effect for Emotes curently.
+
+**DurationType**: ByClipLength will let animation play in full.
+
+**AudioClips**: Will play audio at start of animation if included.
+
+**EmoteMessageStringForMe**:
+
+The sender of the emote will see this message. The typed message will not be
+shown.
+
+Ex: User “Player1” types “/playDead”
+
+His chat reads: “[You are playing dead]”.
+
+**EmoteMessageStringForOthers**:
+
+From the above example other players will see: [Player1 is dead…or is he?]
 
 **Done.**
 
 Hit play and press the button you selected to show the cursor.
 
-[![](http://img.youtube.com/vi/Wbf0DS2OH38/0.jpg)](http://www.youtube.com/watch?v=Wbf0DS2OH38)
+[![](https://i9.ytimg.com/vi/9hTeKR2RBAM/mq2.jpg?sqp=CNi1-4UG&rs=AOn4CLDXgm31Cdkr94r5qOnk8hP-U-ToDg)](https://youtu.be/9hTeKR2RBAM)
