@@ -13,7 +13,7 @@ namespace MultiplayerARPG
         public string slashCmdText;
         [Tooltip("KeyName from InputSettingsManager settings.")]
         public string keyName;
-        public ActionAnimation actionAnimation;
+        public ActionAnimation[] actionAnimations;
         [Tooltip("Display text after message for you. EX: You 'are dancing.'")]
         public string emoteMessageStringForMe;
 
@@ -31,6 +31,9 @@ namespace MultiplayerARPG
                 return "[" + whoIsDoingAction + " " + emoteMessageStringForOthers + "]";
             }
         }
+
+        [Tooltip("Option to cancel emote animation if movement state changes.")]
+        public bool cancelOnMovementState;
     }
 
     [CreateAssetMenu(fileName = "EmoteData", menuName = "RatherGoodGames/EmoteData", order = 1)]

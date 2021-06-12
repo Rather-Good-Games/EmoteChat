@@ -74,18 +74,69 @@ namespace MultiplayerARPG
                     {
                         if (UIChatHandlerRef.EmoteData.GetBySlashCmdText(cmd, out EmoteAnimationData emoteAnimationData))
                         {
-                            PlayActionAnimationDirectly(emoteAnimationData);
+                            StartCoroutine(PlayEmoteAnimation(emoteAnimationData));
                         }
                     }
                 }
             }
         }
 
+        Coroutine playActionAnimationDirectly_Coroutine = null;
 
-        public void PlayActionAnimationDirectly(EmoteAnimationData emoteAnimationData)
+        /// <summary>
+        /// Start emote process and check for cancel or movement state change
+        /// </summary>
+        /// <param name="emoteAnimationData"></param>
+        /// <returns></returns>
+        public IEnumerator PlayEmoteAnimation(EmoteAnimationData emoteAnimationData)
         {
-            animatorCharacterModel_ForEmote.PlayActionAnimationDirectly(emoteAnimationData.actionAnimation);
+
+            foreach (var actionAnimation in emoteAnimationData.actionAnimations)
+            {
+                //Save ref to action animation coroutine in case canceled by another process we can check here
+                playActionAnimationDirectly_Coroutine = animatorCharacterModel_ForEmote.PlayActionAnimationDirectly(actionAnimation);
+
+                while (true)
+                {
+                    if (!CanDoActions()) //another action probably, cancel this.
+                    {
+                        CancelEmoteAnimations(false); //no need to overwrite animation if another action already did
+                        yield break;
+                    }
+                    else if (!animatorCharacterModel_ForEmote.playActionAnimationDirectlyRunning)//break from while, check for another animation or exit if done.
+                    {
+                        break;  
+                    }
+                    else if (emoteAnimationData.cancelOnMovementState) //This is still running so check for movement state.
+                    {
+                        if (EntityIsMoving())
+                        {
+                            CancelEmoteAnimations(true);
+                            yield break;
+                        }
+                    }
+
+                    yield return null;
+                }
+            }
         }
+
+
+        private void CancelEmoteAnimations(bool stopActionAnimationIfPlaying)
+        {
+            animatorCharacterModel_ForEmote.CancelPlayingActionAnimationDirectly(stopActionAnimationIfPlaying);
+        }
+
+        private bool EntityIsMoving()
+        {
+            return (!MovementState.HasFlag(MovementState.IsGrounded) ||
+                    Entity.MovementState.HasFlag(MovementState.Forward) ||
+                    Entity.MovementState.HasFlag(MovementState.Backward) ||
+                    Entity.MovementState.HasFlag(MovementState.Left) ||
+                    Entity.MovementState.HasFlag(MovementState.Right) ||
+                    Entity.MovementState.HasFlag(MovementState.IsJump));
+        }
+
 
     }
 }

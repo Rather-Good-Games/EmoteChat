@@ -15,8 +15,8 @@ MonoBehaviour:
   emoteAnimationData:
   - slashCmdText: wave
     keyName: waveKey
-    actionAnimation:
-      clip: {fileID: 7400000, guid: b17e91ae0ce283142b35a258704d1a3e, type: 3}
+    actionAnimations:
+    - clip: {fileID: 7400000, guid: b17e91ae0ce283142b35a258704d1a3e, type: 3}
       playClipAllLayers: 1
       animSpeedRate: 0
       triggerDurationRate: 0
@@ -27,10 +27,11 @@ MonoBehaviour:
       audioClips: []
     emoteMessageStringForMe: are waving.
     emoteMessageStringForOthers: is waving.
+    cancelOnMovementState: 0
   - slashCmdText: squat
     keyName: squatKey
-    actionAnimation:
-      clip: {fileID: 7400000, guid: 0d88c33ff5f335544b2a9ae59698cb5e, type: 3}
+    actionAnimations:
+    - clip: {fileID: 7400000, guid: 0d88c33ff5f335544b2a9ae59698cb5e, type: 3}
       playClipAllLayers: 1
       animSpeedRate: 0
       triggerDurationRate: 0
@@ -41,17 +42,34 @@ MonoBehaviour:
       audioClips: []
     emoteMessageStringForMe: are doing squat thrusts. 1.2.3.4.1.2.3.4.
     emoteMessageStringForOthers: is doing squat thrusts. 1.2.3.4.1.2.3.4.
+    cancelOnMovementState: 1
   - slashCmdText: playDead
     keyName: playDeadKey
-    actionAnimation:
-      clip: {fileID: 7400000, guid: a8b700e4a0e5fbc4495cf90ef5f9df69, type: 3}
+    actionAnimations:
+    - clip: {fileID: 7400000, guid: a8b700e4a0e5fbc4495cf90ef5f9df69, type: 3}
       playClipAllLayers: 1
       animSpeedRate: 0
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
       durationType: 0
       fixDurationValue: 0
-      extraDuration: 0
+      extraDuration: 1000
       audioClips: []
     emoteMessageStringForMe: are playing dead.
     emoteMessageStringForOthers: is dead!...or is he?
+    cancelOnMovementState: 1
+  - slashCmdText: sit
+    keyName: 
+    actionAnimations:
+    - clip: {fileID: 7400000, guid: 0906631fb67355941946f4fc4394baca, type: 3}
+      playClipAllLayers: 1
+      animSpeedRate: 0
+      triggerDurationRate: 0
+      multiHitTriggerDurationRates: []
+      durationType: 0
+      fixDurationValue: 0
+      extraDuration: 30
+      audioClips: []
+    emoteMessageStringForMe: are sitting.
+    emoteMessageStringForOthers: is sitting.
+    cancelOnMovementState: 1

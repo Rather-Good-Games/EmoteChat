@@ -9,15 +9,17 @@ using UnityEditor;
 namespace MultiplayerARPG
 {
 
-
-
     //Rather Good PlayActionAnimationDirectly.
     //Provide hooks to pass an Action Animation to the animator and play it
     public partial class AnimatorCharacterModel
     {
+        [Header("Play Action Animation Directly Debug.")]
+        public bool playActionAnimationDirectlyRunning;
+        [SerializeField] private bool currentAnimationHasClip;
 
         public Coroutine PlayActionAnimationDirectly(ActionAnimation actionAnimation)
         {
+
             StopActionAnimation();
             StopSkillCastAnimation();
             StopWeaponChargeAnimation();
@@ -27,6 +29,7 @@ namespace MultiplayerARPG
 
         protected IEnumerator PlayActionAnimationDirectly_Coroutine(ActionAnimation actionAnimation)
         {
+            playActionAnimationDirectlyRunning = true;
 
             float playSpeedMultiplier = 1f;
             if (actionAnimation.animSpeedRate > 0)
@@ -34,8 +37,8 @@ namespace MultiplayerARPG
 
             AudioManager.PlaySfxClipAtAudioSource(actionAnimation.GetRandomAudioClip(), GenericAudioSource);
 
-            bool hasClip = actionAnimation.clip != null && animator.isActiveAndEnabled;
-            if (hasClip)
+            currentAnimationHasClip = actionAnimation.clip != null && animator.isActiveAndEnabled;
+            if (currentAnimationHasClip)
             {
                 CacheAnimatorController[CLIP_ACTION] = actionAnimation.clip;
                 animator.SetFloat(ANIM_ACTION_CLIP_MULTIPLIER, playSpeedMultiplier);
@@ -54,25 +57,30 @@ namespace MultiplayerARPG
                 }
             }
 
-            float countDowntimer = actionAnimation.GetClipLength() / playSpeedMultiplier; // 3 seconds you can change this 
+            yield return new WaitForSecondsRealtime(actionAnimation.GetClipLength() / playSpeedMultiplier);
 
-            //Read action animator flag can cancel action or countown timer
-            while (animator.GetBool(ANIM_DO_ACTION) && countDowntimer > 0)
-            {
-                countDowntimer -= Time.deltaTime;
-                yield return null;
-            }  
-
-            // Stop doing action animation
-            if (hasClip)
-            {
-                animator.SetBool(ANIM_DO_ACTION, false);
-                animator.SetBool(ANIM_DO_ACTION_ALL_LAYERS, false);
-            }
             // Waits by current transition + extra duration before end playing animation state
             yield return new WaitForSecondsRealtime(actionAnimation.GetExtraDuration() / playSpeedMultiplier);
 
+            CancelPlayingActionAnimationDirectly(true);
+
         }
+
+        public void CancelPlayingActionAnimationDirectly(bool stopActionAnimationIfPlaying)
+        {
+            if (currentAnimationHasClip && stopActionAnimationIfPlaying)
+            {
+                StopActionAnimation();
+            }
+            playActionAnimationDirectlyRunning = false;
+        }
+
+
+      
+
+
+
+
 
 
     }
