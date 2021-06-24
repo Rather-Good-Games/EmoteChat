@@ -1,5 +1,10 @@
 # EmoteChat
 
+
+**Demo Video**
+
+[![Emote Chat](media/3dae21cdc03a875b06937f7529b4aedf.jpeg)](https://youtu.be/E2ZnmYjW9Pk)
+
 **Author:** RatherGood1
 
 **Version**: 0.2
@@ -135,6 +140,3 @@ or until movementState changes.
 
 **Done.**
 
-**Demo Video**
-
-[![Emote Chat](media/3dae21cdc03a875b06937f7529b4aedf.jpeg)](https://youtu.be/E2ZnmYjW9Pk)
