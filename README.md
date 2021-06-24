@@ -135,4 +135,6 @@ or until movementState changes.
 
 **Done.**
 
-[![](https://i9.ytimg.com/vi/E2ZnmYjW9Pk/mq2.jpg?sqp=COyvkYYG&rs=AOn4CLDKhiFz5EKWPb4j8opNWnLZVAKPjg)](https://youtu.be/E2ZnmYjW9Pk)
+**Demo Video**
+
+[![Emote Chat](media/3dae21cdc03a875b06937f7529b4aedf.jpeg)](https://youtu.be/E2ZnmYjW9Pk)
