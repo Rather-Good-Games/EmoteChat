@@ -40,7 +40,7 @@ namespace MultiplayerARPG
             currentAnimationHasClip = actionAnimation.clip != null && animator.isActiveAndEnabled;
             if (currentAnimationHasClip)
             {
-                CacheAnimatorController[CLIP_ACTION] = actionAnimation.clip;
+                CurrentAnimatorController[CLIP_ACTION] = actionAnimation.clip;
                 animator.SetFloat(ANIM_ACTION_CLIP_MULTIPLIER, playSpeedMultiplier);
                 animator.SetBool(ANIM_DO_ACTION, true);
                 animator.SetBool(ANIM_DO_ACTION_ALL_LAYERS, actionAnimation.playClipAllLayers);

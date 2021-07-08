@@ -7,11 +7,11 @@
 
 **Author:** RatherGood1
 
-**Version**: 0.2
+**Version**: 0.3
 
-**Updated:** 12 Jun 21
+**Updated:** 8 July 21
 
-**Compatibility: (tested on) Suriyun** **MMORPG Kit Version 1.65f**
+**Compatibility: (tested on) Suriyun** **MMORPG Kit Version 1.66d**
 
 **Description:** Provides slash commands or hotkey activation to perform emote
 animations.
