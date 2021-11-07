@@ -3,15 +3,15 @@
 
 **Demo Video**
 
-[![Emote Chat](media/3dae21cdc03a875b06937f7529b4aedf.jpeg)](https://youtu.be/E2ZnmYjW9Pk)
+[![Emote Chat](media/VideoPicEmoteChat.png)](https://youtu.be/ktHKpvC-qPk)
 
 **Author:** RatherGood1
 
 **Version**: 0.4
 
 Major update for MMORPG KIt 1.71.  
-* Suppports new PlayableCharacterModel and (previous) AnimatorCharacterModel. Some differences as to how these work are explained below.
-* UI changes for seperate tabbed chat areas supported. EmoteChat always shows to Loal channel.
+* Supports new PlayableCharacterModel and (previous) AnimatorCharacterModel. Some differences as to how these work are explained below.
+* UI changes for separate tabbed chat areas supported. EmoteChat always shows to Local channel.
 
 **Updated:** 5 Nov 21
 
@@ -40,7 +40,7 @@ Add this single line of code:
 
  **NOTE:**
 
-    NO LONGER Requires changes to any UIGamePlay components. This function will capture recieved chat and modify it before displaying automatically.
+    NO LONGER Requires changes to any UIGamePlay components. This function will capture received chat and modify it before displaying automatically.
 
 Modification:
 
@@ -109,7 +109,7 @@ types work with ActionAnimations)
 
 **Extra Duration:** After animation plays this time will be added before ending.
 
-**AudioClips:** Will play audio immediatley on Emote start if included.
+**AudioClips:** Will play audio immediately on Emote start if included.
 
 **Avatar Mask:** 
 
@@ -140,7 +140,7 @@ Simple example of a single short animation. CancelOnMovementState is not checked
 
     For AnimatorCharacterModel CancelOnMovementState is not checked so will always play in full even in player moves.
 
-    For PlayableCharacterModel a TopMask is included that only anmates the upper body.
+    For PlayableCharacterModel a TopMask is included that only animates the upper body.
 
 ![/wave](media/WaveEmoteData.png)
 
