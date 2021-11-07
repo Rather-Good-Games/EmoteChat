@@ -17,14 +17,16 @@ MonoBehaviour:
     keyName: waveKey
     actionAnimations:
     - clip: {fileID: 7400000, guid: b17e91ae0ce283142b35a258704d1a3e, type: 3}
-      playClipAllLayers: 1
+      playClipAllLayers: 0
       animSpeedRate: 0
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
       durationType: 0
-      fixDurationValue: 0
-      extraDuration: 0
-      audioClips: []
+      fixedDuration: 0
+      extendDuration: 0
+      audioClips:
+      - {fileID: 8300000, guid: 543fbe2f32e015749bafb0f7691eb41b, type: 3}
+    avatarMask: {fileID: 31900000, guid: 46c4b7ef94e138345b701a79ad0e62c2, type: 2}
     emoteMessageStringForMe: are waving.
     emoteMessageStringForOthers: is waving.
     cancelOnMovementState: 0
@@ -37,9 +39,10 @@ MonoBehaviour:
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
       durationType: 0
-      fixDurationValue: 0
-      extraDuration: 0
+      fixedDuration: 3
+      extendDuration: 0
       audioClips: []
+    avatarMask: {fileID: 31900000, guid: 84859342ec9239f42a1721d6c496779f, type: 2}
     emoteMessageStringForMe: are doing squat thrusts. 1.2.3.4.1.2.3.4.
     emoteMessageStringForOthers: is doing squat thrusts. 1.2.3.4.1.2.3.4.
     cancelOnMovementState: 1
@@ -52,9 +55,11 @@ MonoBehaviour:
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
       durationType: 0
-      fixDurationValue: 0
-      extraDuration: 1000
-      audioClips: []
+      fixedDuration: 0
+      extendDuration: 1000
+      audioClips:
+      - {fileID: 8300000, guid: 4b0ba8ffcb3862e47a898d4e5002bd20, type: 3}
+    avatarMask: {fileID: 31900000, guid: 84859342ec9239f42a1721d6c496779f, type: 2}
     emoteMessageStringForMe: are playing dead.
     emoteMessageStringForOthers: is dead!...or is he?
     cancelOnMovementState: 1
@@ -67,9 +72,10 @@ MonoBehaviour:
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
       durationType: 0
-      fixDurationValue: 0
-      extraDuration: 30
+      fixedDuration: 5
+      extendDuration: 10
       audioClips: []
+    avatarMask: {fileID: 31900000, guid: 84859342ec9239f42a1721d6c496779f, type: 2}
     emoteMessageStringForMe: are sitting.
     emoteMessageStringForOthers: is sitting.
     cancelOnMovementState: 1

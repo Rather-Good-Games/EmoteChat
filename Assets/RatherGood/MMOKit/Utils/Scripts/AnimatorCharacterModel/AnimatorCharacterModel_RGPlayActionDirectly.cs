@@ -19,7 +19,6 @@ namespace MultiplayerARPG
 
         public Coroutine PlayActionAnimationDirectly(ActionAnimation actionAnimation)
         {
-
             StopActionAnimation();
             StopSkillCastAnimation();
             StopWeaponChargeAnimation();
@@ -31,16 +30,14 @@ namespace MultiplayerARPG
         {
             playActionAnimationDirectlyRunning = true;
 
-            float playSpeedMultiplier = 1f;
-            if (actionAnimation.animSpeedRate > 0)
-                playSpeedMultiplier = actionAnimation.animSpeedRate;
+            float playSpeedMultiplier = (actionAnimation.animSpeedRate > 0) ? actionAnimation.animSpeedRate : 1f;
 
             AudioManager.PlaySfxClipAtAudioSource(actionAnimation.GetRandomAudioClip(), GenericAudioSource);
 
             currentAnimationHasClip = actionAnimation.clip != null && animator.isActiveAndEnabled;
             if (currentAnimationHasClip)
             {
-                CurrentAnimatorController[CLIP_ACTION] = actionAnimation.clip;
+                CacheAnimatorController[CLIP_ACTION] = actionAnimation.clip;
                 animator.SetFloat(ANIM_ACTION_CLIP_MULTIPLIER, playSpeedMultiplier);
                 animator.SetBool(ANIM_DO_ACTION, true);
                 animator.SetBool(ANIM_DO_ACTION_ALL_LAYERS, actionAnimation.playClipAllLayers);
@@ -60,7 +57,8 @@ namespace MultiplayerARPG
             yield return new WaitForSecondsRealtime(actionAnimation.GetClipLength() / playSpeedMultiplier);
 
             // Waits by current transition + extra duration before end playing animation state
-            yield return new WaitForSecondsRealtime(actionAnimation.GetExtraDuration() / playSpeedMultiplier);
+            if (actionAnimation.extendDuration > 0)
+                yield return new WaitForSecondsRealtime(actionAnimation.extendDuration / playSpeedMultiplier);
 
             CancelPlayingActionAnimationDirectly(true);
 
@@ -76,7 +74,7 @@ namespace MultiplayerARPG
         }
 
 
-      
+
 
 
 

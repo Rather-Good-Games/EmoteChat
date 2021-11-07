@@ -9,17 +9,21 @@ namespace MultiplayerARPG
     [System.Serializable]
     public struct EmoteAnimationData
     {
-        [Tooltip("Text entered in chat to trigger animation. i.e. 'dance' Slash '/' is not needed here and will be stripped off before checks.")]
+        [Tooltip("Text entered in chat to trigger animation. EX: 'dance'; Slash '/' is not needed here and will be stripped off before checks.")]
         public string slashCmdText;
         [Tooltip("KeyName from InputSettingsManager settings.")]
         public string keyName;
+
         public ActionAnimation[] actionAnimations;
-        [Tooltip("Display text after message for you. EX: You 'are dancing.'")]
+
+        [Tooltip("(Optional) Can provide AvatarMask if using 'PlayableCharacterModel' component.")]
+        public AvatarMask avatarMask;
+
+        [Tooltip("Display text after message for you. EX: [You 'are dancing.']")]
         public string emoteMessageStringForMe;
 
-        [Tooltip("Display text after message for others. EX: (Player2) 'is dancing.'")]
+        [Tooltip("Display text after message for others. EX: [Player2 'is dancing.']")]
         public string emoteMessageStringForOthers;
-
         public string GetMessageForEmote(bool itIsMe, string whoIsDoingAction)
         {
             if (itIsMe)
@@ -87,12 +91,7 @@ namespace MultiplayerARPG
             if (String.IsNullOrEmpty(keyName))
                 return false;
 
-            if (keyNameDict.TryGetValue(tempKeyName, out emoteAnimationData))
-            {
-                return true;
-            }
-
-            return false;
+            return (keyNameDict.TryGetValue(tempKeyName, out emoteAnimationData));
 
         }
 

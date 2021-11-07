@@ -14,35 +14,34 @@ namespace MultiplayerARPG
     public partial class PlayerCharacterEntity
     {
 
-        [Header("Rather Good Emotes")]
-        [Tooltip("Enable Emote animation.")]
-        public bool enableRatherGoodEmotes = true;
-
-        UIChatHandler_RGEmote _uIChatHandler; //local handler
-
-        public UIChatHandler_RGEmote UIChatHandlerRef
-        {
-            get
-            {
-                if (_uIChatHandler == null)
-                    _uIChatHandler = FindObjectOfType<UIChatHandler_RGEmote>();
-                return _uIChatHandler;
-            }
-        }
-
+        //Old(legacy?)
         private AnimatorCharacterModel animatorCharacterModel_ForEmote;  //local reference
+
+        //alt(new) if using PlayableCharacterModel 
+        private GameData.Model.Playables.PlayableCharacterModel playableCharacterModel_ForEmote;
+
+        //Ref if we own this routine
+        Coroutine thisActionRoutineRef = null;
 
         [DevExtMethods("Awake")]
         protected void AwakeRGEmote()
         {
+            thisActionRoutineRef = null;
+
             animatorCharacterModel_ForEmote = GetComponent<AnimatorCharacterModel>();
+
+            //Check if using newer animator version
+            playableCharacterModel_ForEmote = GetComponent<GameData.Model.Playables.PlayableCharacterModel>();
+
             ClientGenericActions.onClientReceiveChatMessage += ReceiveChatMessage;
+            onUpdate += RGEmotePlayerUpdate;
         }
 
         [DevExtMethods("OnDestroy")]
         protected void OnDestroyRGEmote()
         {
             ClientGenericActions.onClientReceiveChatMessage -= ReceiveChatMessage;
+            onUpdate -= RGEmotePlayerUpdate;
         }
 
         /// <summary>
@@ -52,7 +51,8 @@ namespace MultiplayerARPG
         /// <param name="msg"></param>
         public void ReceiveChatMessage(ChatMessage msg)
         {
-            if (enableRatherGoodEmotes)
+
+            if (CurrentGameInstance.EnableRatherGoodEmotes)
             {
 
                 if (msg.sender != CharacterName)
@@ -72,16 +72,19 @@ namespace MultiplayerARPG
                     string cmd = splitText[0].ToLower(); //Grab first item and set all lower case
                     if (cmd.StartsWith("/"))
                     {
-                        if (UIChatHandlerRef.EmoteData.GetBySlashCmdText(cmd, out EmoteAnimationData emoteAnimationData))
+                        if (CurrentGameInstance.EmoteData.GetBySlashCmdText(cmd, out EmoteAnimationData emoteAnimationData))
                         {
-                            StartCoroutine(PlayEmoteAnimation(emoteAnimationData));
+
+                            if (playableCharacterModel_ForEmote != null)
+                                StartCoroutine(PlayEmoteAnimationPCM(emoteAnimationData));
+                            else
+                                StartCoroutine(PlayEmoteAnimation(emoteAnimationData));
+
                         }
                     }
                 }
             }
         }
-
-        Coroutine playActionAnimationDirectly_Coroutine = null;
 
         /// <summary>
         /// Start emote process and check for cancel or movement state change
@@ -93,26 +96,25 @@ namespace MultiplayerARPG
 
             foreach (var actionAnimation in emoteAnimationData.actionAnimations)
             {
-                //Save ref to action animation coroutine in case canceled by another process we can check here
-                playActionAnimationDirectly_Coroutine = animatorCharacterModel_ForEmote.PlayActionAnimationDirectly(actionAnimation);
+                thisActionRoutineRef = animatorCharacterModel_ForEmote.PlayActionAnimationDirectly(actionAnimation);
 
                 while (true)
                 {
                     if (!CanDoActions()) //another action probably, cancel this.
                     {
                         CancelEmoteAnimations(false); //no need to overwrite animation if another action already did
-                        yield break;
+                        yield break; //done
                     }
                     else if (!animatorCharacterModel_ForEmote.playActionAnimationDirectlyRunning)//break from while, check for another animation or exit if done.
                     {
-                        break;  
+                        break; //next?
                     }
                     else if (emoteAnimationData.cancelOnMovementState) //This is still running so check for movement state.
                     {
                         if (EntityIsMoving())
                         {
                             CancelEmoteAnimations(true);
-                            yield break;
+                            yield break; //done
                         }
                     }
 
@@ -121,10 +123,47 @@ namespace MultiplayerARPG
             }
         }
 
+        public IEnumerator PlayEmoteAnimationPCM(EmoteAnimationData emoteAnimationData)
+        {
+
+            foreach (var actionAnimation in emoteAnimationData.actionAnimations)
+            {
+
+                thisActionRoutineRef = playableCharacterModel_ForEmote.PlayActionAnimationDirectly(actionAnimation, emoteAnimationData.avatarMask);
+
+                while (true)
+                {
+                    if (!CanDoActions()) //another action probably, cancel this.
+                    {
+                        CancelEmoteAnimations(false); //no need to overwrite animation if another action already did
+                        yield break; //done
+                    }
+                    else if (!playableCharacterModel_ForEmote.IsDoingAction())//break from while, check for another animation or exit if done.
+                    {
+                        break; //Next?
+                    }
+                    else if (emoteAnimationData.cancelOnMovementState) //This is still running so check for movement state.
+                    {
+                        if (EntityIsMoving())
+                        {
+                            CancelEmoteAnimations(true);
+                            yield break; //done
+                        }
+                    }
+
+                    yield return null;
+                }
+            }
+
+            thisActionRoutineRef = null;
+
+        }
 
         private void CancelEmoteAnimations(bool stopActionAnimationIfPlaying)
         {
-            animatorCharacterModel_ForEmote.CancelPlayingActionAnimationDirectly(stopActionAnimationIfPlaying);
+            animatorCharacterModel_ForEmote?.CancelPlayingActionAnimationDirectly(stopActionAnimationIfPlaying);
+            playableCharacterModel_ForEmote?.CancelPlayingActionAnimationDirectly();
+            thisActionRoutineRef = null;
         }
 
         private bool EntityIsMoving()
@@ -137,6 +176,33 @@ namespace MultiplayerARPG
                     Entity.MovementState.HasFlag(MovementState.IsJump));
         }
 
+
+
+        void RGEmotePlayerUpdate()
+        {
+
+            if (CurrentGameInstance.EnableRatherGoodEmotes)
+            {
+                if (CanDoActions())
+                {
+                    if (CurrentGameInstance.EmoteData.CheckInputManagerOnUpdate(out EmoteAnimationData emoteAnimationData))
+                    {
+                        string tempCmd = emoteAnimationData.slashCmdText;
+                        if (!tempCmd.StartsWith("/"))
+                            tempCmd = '/' + tempCmd;
+
+                        GameInstance.ClientChatHandlers.SendChatMessage(new ChatMessage()
+                        {
+                            channel = ChatChannel.Local,
+                            message = tempCmd,
+                            sender = CharacterName,
+                            receiver = string.Empty, //TODO: Could also get player target for point
+                        });
+                    }
+                }
+            }
+
+        }
 
     }
 }
