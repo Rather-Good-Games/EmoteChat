@@ -29,7 +29,7 @@ You need to provide your own animations. Demo uses simple kit animations.
 
 **Core MMORPG Kit modifications:**
 
-Add this single line of code:
+1. Add this line of code:
 ```csharp
  chatMessage = CheckAndReplaceChatMsgEmotes(chatMessage);
  ```
@@ -68,6 +68,14 @@ Modification:
 
             FillChatMessages();
         }
+```
+
+2.  Add "partial" modifyer to PlayableCharacterModel in:
+
+    \Assets\UnityMultiplayerARPG\Core\Scripts\GameData\Model\3D\PlayableCharacterModel.cs
+
+```csharp 
+public partial class PlayableCharacterModel : BaseCharacterModel
 ```
 
 **Instructions for use:**
