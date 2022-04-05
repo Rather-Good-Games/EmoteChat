@@ -11,7 +11,6 @@ namespace MultiplayerARPG
         [Tooltip("Enable Emotes. Removes update and chat checks if false.")]
         public bool enableRatherGoodEmotes = true;
 
-
         public bool EnableRatherGoodEmotes
         {
             get { return (enableRatherGoodEmotes && (emoteData != null)); }
@@ -26,6 +25,18 @@ namespace MultiplayerARPG
             get { return emoteData; }
             private set { emoteData = value; }
         }
+
+        //Credit @Neomis for color addition
+        [Tooltip("Set Emote text color as desired")]
+        [SerializeField] Color colorOfEmoteMessageStringForMe = Color.green;
+        public string ColorOfEmoteMessageStringForMe => ColorUtility.ToHtmlStringRGBA(colorOfEmoteMessageStringForMe);
+
+        [Tooltip("Set Emote text color as desired")]
+        [SerializeField] Color colorOfEmoteMessageStringForOthers = Color.blue;
+        public string ColorOfEmoteMessageStringForOthers => ColorUtility.ToHtmlStringRGBA(colorOfEmoteMessageStringForOthers);
+        
+
+
 
 
     }

@@ -550,9 +550,8 @@ MonoBehaviour:
   recoverMonstersWhenRoundEnd: 1
   guildWarMailSenderId: GUILDWAR
   guildWarMailSenderName: Guild War Manager
-  centralTransportFactory: {fileID: 0}
-  centralNetworkAddress: 127.0.0.1
-  centralNetworkPort: 7000
+  clusterServerAddress: 127.0.0.1
+  clusterServerPort: 6010
   machineAddress: 127.0.0.1
   autoSaveDuration: 30
   mapSpawnMillisecondsTimeout: 0
@@ -795,6 +794,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableRatherGoodEmotes: 1
   emoteData: {fileID: 11400000, guid: 1194f63f89b2a6d40a26f342bacc19c7, type: 2}
+  enableTargetRGGenericEntitiesInfo: 0
+  enableIntroVideo: 0
+  loadIntroVideoSettingsFromPlayerPrefs: 0
+  allowDamageToSelfAndAlliesFromAllSources: 0
+  enableRatherGoodRagdoll: 0
+  prefabUICombatTextRG: {fileID: 0}
+  debugRagdollCollidersInEditor: 0
+  ragdollLayerMask:
+    layerIndex: 0
+  enableRatherGoodSheath: 0
+  enableRatherGoodSecondWeaponSet: 1
+  enableCharacterSelectSheath: 1
+  disablePitchIKWhenSheathed: 1
+  switchControllerModeWhenSheathed: 1
+  sheathButtonName: Sheath
   dimensionType: 0
   saveSystem: {fileID: 0}
   gameplayRule: {fileID: 11400000, guid: 3bfe680a81b27ce4ba9642ddff7baa17, type: 2}
@@ -805,6 +819,8 @@ MonoBehaviour:
     type: 3}
   warpPortalEntityPrefab: {fileID: 114731892942428866, guid: 5773ff22c96e3ab4bb12d8202ec86244,
     type: 3}
+  playerCorpsePrefab: {fileID: 0}
+  monsterCorpsePrefab: {fileID: 0}
   uiSceneGameplayPrefab: {fileID: 114088817493988554, guid: 4af36d4bdf0cf07409f4412130b793ec,
     type: 3}
   uiSceneGameplayMobilePrefab: {fileID: 114630585920460692, guid: 70474cf4f9f686c45b0305621722205f,
@@ -838,7 +854,7 @@ MonoBehaviour:
   muteEffects: []
   freezeEffects: []
   expTree: 140000001e00000031000000490000006500000086000000aa000000d1000000fa000000270100005601000087010000bb010000f10100002902000064020000a0020000de0200001e0300005f030000a3030000e80300002f04000077040000c10400000d0500005a050000a9050000f90500004a0600009d060000f1060000470700009e070000f707000050080000ab0800000809000065090000c4090000240a0000850a0000e80a00004b0b0000b00b0000160c00007d0c0000e50c00004e0d0000b90d0000240e0000910e0000fe0e00006d0f0000dd0f00004d100000bf10000032110000a61100001b12000090120000071300007f130000f813000071140000ec14000068150000e415000062160000e01600005f170000e017000061180000e318000066190000ea1900006e1a0000f41a00007a1b0000021c00008a1c0000131d00009d1d0000281e0000b31e0000401f0000cd1f00005b200000ea200000792100000a2200009b2200002d230000c023000054240000e82400007e25000014260000aa26000042270000
-  gameDatabase: {fileID: 11400000, guid: 78362f3a31c322e4396aa7f42ea58f99, type: 2}
+  gameDatabase: {fileID: 11400000, guid: c7f6a960e9290d84983eb72454712b76, type: 2}
   npcDatabase: {fileID: 11400000, guid: dae14f7f7d125fc4096ba7ac1f68d581, type: 2}
   warpPortalDatabase: {fileID: 11400000, guid: 6a5e8bb8645bbb349a05709f9b37b5df, type: 2}
   socialSystemSetting: {fileID: 11400000, guid: afad462dae207414f91b207f6882dad2,
@@ -853,14 +869,22 @@ MonoBehaviour:
     tag: MonsterTag
   npcTag:
     tag: NpcTag
+  vehicleTag:
+    tag: VehicleTag
   itemDropTag:
     tag: ItemDropTag
   buildingTag:
     tag: BuildingTag
   harvestableTag:
     tag: HarvestableTag
-  characterLayer:
-    layerIndex: 8
+  playerLayer:
+    layerIndex: 17
+  monsterLayer:
+    layerIndex: 18
+  npcLayer:
+    layerIndex: 19
+  vehicleLayer:
+    layerIndex: 20
   itemDropLayer:
     layerIndex: 9
   buildingLayer:
@@ -880,6 +904,14 @@ MonoBehaviour:
   combatTextDistance: 20
   maxEquipWeaponSet: 2
   currentPositionSaveMode: 0
+  playerDropItemMode: 0
+  playerDeadDropItemMode: 0
+  playerCorpseAppearDuration: 60
+  monsterDeadDropItemMode: 0
+  monsterCorpseAppearDuration: 60
+  returnMoveSpeedDelayAfterAction: 0.1
+  mountDelay: 1
+  useItemDelay: 0.25
   dismantleFilter:
     includeJunk: 0
     includeArmor: 1
@@ -896,6 +928,7 @@ MonoBehaviour:
   canDismantleItemByPlayer: 0
   canRepairItemByPlayer: 0
   inventorySystem: 1
+  noInventoryWeightLimit: 0
   doNotFillEmptySlots: 0
   baseSlotLimit: 60
   playerStorage:

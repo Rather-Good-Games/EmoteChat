@@ -18,7 +18,7 @@ namespace MultiplayerARPG
         private AnimatorCharacterModel animatorCharacterModel_ForEmote;  //local reference
 
         //alt(new) if using PlayableCharacterModel 
-        private GameData.Model.Playables.PlayableCharacterModel playableCharacterModel_ForEmote;
+        private GameData.Model.Playables.PlayableCharacterModel_Custom playableCharacterModel_ForEmote;
 
         //Ref if we own this routine
         Coroutine thisActionRoutineRef = null;
@@ -26,12 +26,21 @@ namespace MultiplayerARPG
         [DevExtMethods("Awake")]
         protected void AwakeRGEmote()
         {
+
+            if (!CurrentGameInstance.EnableRatherGoodEmotes)
+                return;
+
             thisActionRoutineRef = null;
 
             animatorCharacterModel_ForEmote = GetComponent<AnimatorCharacterModel>();
 
             //Check if using newer animator version
-            playableCharacterModel_ForEmote = GetComponent<GameData.Model.Playables.PlayableCharacterModel>();
+            playableCharacterModel_ForEmote = GetComponent<GameData.Model.Playables.PlayableCharacterModel_Custom>();
+            if ((playableCharacterModel_ForEmote == null) && (animatorCharacterModel_ForEmote == null))
+            {
+                CurrentGameInstance.EnableRatherGoodEmotes = false;  //turn it off
+                Debug.Log("Player entity must have PlayableCharacterModel_Custom or AnimatorCharacterModel");
+            }
 
             ClientGenericActions.onClientReceiveChatMessage += ReceiveChatMessage;
             onUpdate += RGEmotePlayerUpdate;

@@ -11,6 +11,7 @@ namespace MultiplayerARPG
     {
         [Tooltip("Text entered in chat to trigger animation. EX: 'dance'; Slash '/' is not needed here and will be stripped off before checks.")]
         public string slashCmdText;
+
         [Tooltip("KeyName from InputSettingsManager settings.")]
         public string keyName;
 
@@ -24,15 +25,16 @@ namespace MultiplayerARPG
 
         [Tooltip("Display text after message for others. EX: [Player2 'is dancing.']")]
         public string emoteMessageStringForOthers;
+
         public string GetMessageForEmote(bool itIsMe, string whoIsDoingAction)
         {
             if (itIsMe)
             {
-                return "[You " + emoteMessageStringForMe + "]";
+                return "<color=#" + GameInstance.Singleton.ColorOfEmoteMessageStringForMe + ">You " + emoteMessageStringForMe + "</color>";
             }
             else
             {
-                return "[" + whoIsDoingAction + " " + emoteMessageStringForOthers + "]";
+                return "<color=#" + GameInstance.Singleton.ColorOfEmoteMessageStringForOthers + ">" + whoIsDoingAction + " " + emoteMessageStringForOthers + "</color>";
             }
         }
 

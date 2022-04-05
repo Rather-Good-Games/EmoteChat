@@ -13,9 +13,9 @@ namespace MultiplayerARPG
     {
         [Tooltip("Sub folder within Resources folder to load from.")]
         public string subFolder = "RGGResources";
+
         protected override async UniTask LoadDataImplement(GameInstance gameInstance)
         {
-            // Use Resources Load Async ?
             Attribute[] attributes = Resources.LoadAll<Attribute>(subFolder);
             BaseItem[] items = Resources.LoadAll<BaseItem>(subFolder);
             ItemCraftFormula[] itemCraftFormulas = Resources.LoadAll<ItemCraftFormula>(subFolder);
@@ -31,7 +31,6 @@ namespace MultiplayerARPG
             Faction[] factions = Resources.LoadAll<Faction>(subFolder);
             BaseCharacterEntity[] characterEntities = Resources.LoadAll<BaseCharacterEntity>(subFolder);
             VehicleEntity[] vehicleEntities = Resources.LoadAll<VehicleEntity>(subFolder);
-
             GameInstance.AddAttributes(attributes);
             GameInstance.AddItems(items);
             GameInstance.AddItemCraftFormulas(0, itemCraftFormulas);
@@ -47,10 +46,10 @@ namespace MultiplayerARPG
             GameInstance.AddFactions(factions);
             GameInstance.AddCharacterEntities(characterEntities);
             GameInstance.AddVehicleEntities(vehicleEntities);
-
             this.InvokeInstanceDevExtMethods("LoadDataImplement", gameInstance);
-            gameInstance.LoadedGameData();
             await UniTask.Yield();
         }
+
+
     }
 }

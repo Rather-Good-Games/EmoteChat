@@ -11,7 +11,7 @@ namespace MultiplayerARPG.GameData.Model.Playables
     /// <summary>
     /// Core mod requires adding 'partial' modifier to 'PlayableCharacterModel'
     /// </summary>
-    public partial class PlayableCharacterModel
+    public partial class PlayableCharacterModel_Custom
     {
 
         public Coroutine PlayActionAnimationDirectly(MultiplayerARPG.ActionAnimation actionAnimation, AvatarMask avatarMask)
@@ -61,6 +61,32 @@ namespace MultiplayerARPG.GameData.Model.Playables
             return isDoingAction;
         }
 
+        public Coroutine PlayActionAnimationDirectly(ActionAnimation actionAnimation)
+        {
+            return StartCoroutine(PlayActionAnimationDirectly_Coroutine(actionAnimation));
+        }
+
+        private IEnumerator PlayActionAnimationDirectly_Coroutine(ActionAnimation actionAnimation)
+        {
+            isDoingAction = true;
+
+            AudioManager.PlaySfxClipAtAudioSource(actionAnimation.GetRandomAudioClip(), GenericAudioSource);
+
+            bool hasClip = actionAnimation.state.clip != null;
+
+            if (hasClip) Behaviour.PlayAction(actionAnimation.state, 1, actionAnimation.GetExtendDuration());
+
+            float waitTime = (actionAnimation.GetClipLength() / actionAnimation.state.animSpeedRate) + actionAnimation.GetExtendDuration();
+
+            // Waits by clip duration(adjusted by speed rate) + extra duration before ending emote and stopping action
+            yield return new WaitForSecondsRealtime(waitTime);
+
+            // Stop doing action animation
+            if (hasClip) Behaviour.StopAction();
+
+            isDoingAction = false;
+
+        }
 
 
     }

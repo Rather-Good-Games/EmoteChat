@@ -79,3 +79,20 @@ MonoBehaviour:
     emoteMessageStringForMe: are sitting.
     emoteMessageStringForOthers: is sitting.
     cancelOnMovementState: 1
+  - slashCmdText: thrill
+    keyName: 
+    actionAnimations:
+    - clip: {fileID: -203655887218126122, guid: e90e7790f55179e4da00549dfe0a1779,
+        type: 3}
+      playClipAllLayers: 1
+      animSpeedRate: 0
+      triggerDurationRate: 0
+      multiHitTriggerDurationRates: []
+      durationType: 0
+      fixedDuration: 5
+      extendDuration: 10
+      audioClips: []
+    avatarMask: {fileID: 31900000, guid: 84859342ec9239f42a1721d6c496779f, type: 2}
+    emoteMessageStringForMe: are sitting.
+    emoteMessageStringForOthers: is sitting.
+    cancelOnMovementState: 1

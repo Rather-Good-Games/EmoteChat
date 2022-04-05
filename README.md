@@ -1,5 +1,8 @@
 # EmoteChat
 
+**Credits**
+
+Thank you https://github.com/denariigames forcolor text example.
 
 **Demo Video**
 
@@ -7,15 +10,17 @@
 
 **Author:** RatherGood1
 
-**Version**: 0.4
+**Version**: 0.5: 4 Apr 22
 
-Major update for MMORPG KIt 1.71.  
+* Add color text for emotes.fixes and updates for latest kit.
+* No longer need to add partial to playableCahracterModel
+* RGUtils synced accross all mods.
+
+(0.4: 12 Nov 22) Major update for MMORPG KIt 1.71.  
 * Supports new PlayableCharacterModel and (previous) AnimatorCharacterModel. Some differences as to how these work are explained below.
 * UI changes for separate tabbed chat areas supported. EmoteChat always shows to Local channel.
 
-**Updated:** 5 Nov 21
-
-**Compatibility:** Tested on Suriyun MMORPG Kit Version 1.71.
+**Compatibility:** Tested on Suriyun MMORPG Kit Version 1.73c.
 
 For previous version of kit (<1.67) use 0.3 version of EmoteChat.
 
@@ -27,7 +32,7 @@ scene. Animation plays for sender. Messages are generated depending on the liste
 
 You need to provide your own animations. Demo uses simple kit animations.
 
-**Core MMORPG Kit modifications:**
+**CORE MMORPG Kit modifications:**
 
 1. Add this line of code:
 ```csharp
@@ -68,14 +73,6 @@ Modification:
 
             FillChatMessages();
         }
-```
-
-2.  Add "partial" modifyer to PlayableCharacterModel in:
-
-    \Assets\UnityMultiplayerARPG\Core\Scripts\GameData\Model\3D\PlayableCharacterModel.cs
-
-```csharp 
-public partial class PlayableCharacterModel : BaseCharacterModel
 ```
 
 **Instructions for use:**
